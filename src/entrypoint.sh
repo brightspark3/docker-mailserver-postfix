@@ -135,10 +135,6 @@ copy_template_file() {
 		replace_var $TMP_DST 'PF_ENABLE_UTF8'
 		replace_var $TMP_DST 'PF_MILTERS'
 		replace_var $TMP_DST 'PF_ADD_MYNETWORKS'
-		sed -i "s/TEMPLATE_DB_HOST/${PF_DB_HOST}/g" /etc/dovecot/dovecot.conf
-		sed -i "s/TEMPLATE_DB_NAME/${PF_DB_NAME}/g" /etc/dovecot/dovecot.conf
-		sed -i "s/TEMPLATE_DB_USER/${PF_DB_USER}/g" /etc/dovecot/dovecot.conf
-		sed -i "s/TEMPLATE_DB_PASS/${PF_DB_PASS}/g" /etc/dovecot/dovecot.conf
 	fi
 	if [ ! -f $TMP_DST ]; then
 		echo "Cannot create $TMP_DST" 1>&2
@@ -450,8 +446,13 @@ configure_sieve
 # Configure postfix
 configure_postfix
 configure_instance -
-postconf compatibility_level=2
+postconf compatibility_level=3.6
 postconf maillog_file=/var/log/mail.log
+
+sed -i "s/TEMPLATE_DB_HOST/${PF_DB_HOST}/g" /etc/dovecot/dovecot.conf
+sed -i "s/TEMPLATE_DB_NAME/${PF_DB_NAME}/g" /etc/dovecot/dovecot.conf
+sed -i "s/TEMPLATE_DB_USER/${PF_DB_USER}/g" /etc/dovecot/dovecot.conf
+sed -i "s/TEMPLATE_DB_PASS/${PF_DB_PASS}/g" /etc/dovecot/dovecot.conf
 
 # Start Dovecot (the mail drop software)
 service dovecot start
