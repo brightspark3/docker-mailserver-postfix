@@ -8,7 +8,8 @@ RUN apt-get update \
     && apt-get install -y --no-install-recommends \
     default-mysql-client \
     apt-utils \
-    procps \
+    lsb-base \
+	procps \
     postfix \
     postfix-mysql \
     dovecot-core \
