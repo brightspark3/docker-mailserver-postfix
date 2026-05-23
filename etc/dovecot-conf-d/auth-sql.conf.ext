@@ -3,8 +3,7 @@
 #
 # <doc/wiki/AuthDatabase.SQL.txt>
 
-passdb sql {
-  passdb_default_password_scheme = BLF-CRYPT  
+passdb sql {  
   query = SELECT username AS user,password FROM mailbox WHERE username = '%{user | username}' AND active=1
 }
 
