@@ -15,8 +15,24 @@ passdb sql {
 #}
 
 userdb sql {
-  query = SELECT CONCAT('/var/vmail/', maildir) AS home, 1000 AS uid, 1000 AS gid, CONCAT('*:bytes=', quota) AS quota_rule FROM mailbox WHERE username = '%{user}' AND active=1
+  query = \
+    (SELECT CONCAT('/var/vmail/', maildir) AS home, 1000 AS uid, 1000 AS gid, CONCAT('*:bytes=', quota) AS quota_rule, 1 AS priority \
+     FROM mailbox \
+     WHERE username = '%{user}') \
+    UNION \
+    (SELECT CONCAT('/var/vmail/', m.maildir) AS home, 1000 AS uid, 1000 AS gid, CONCAT('*:bytes=', m.quota) AS quota_rule, 2 AS priority \
+     FROM mailbox m \
+     JOIN aliases a ON m.username = a.destination \
+     WHERE a.source = '%{user}') \
+    UNION \
+    (SELECT CONCAT('/var/vmail/', m.maildir) AS home, 1000 AS uid, 1000 AS gid, CONCAT('*:bytes=', m.quota) AS quota_rule, 3 AS priority \
+     FROM mailbox m \
+     JOIN aliases a ON m.username = a.destination \
+     WHERE a.source = CONCAT('@', '%{user | domain}')) \
+    ORDER BY priority ASC \
+    LIMIT 1
 }
+
 
 # If you don't have any user-specific settings, you can avoid the user_query
 # by using userdb static instead of userdb sql, for example:
