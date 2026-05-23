@@ -48,16 +48,27 @@ if [[ -z "${PF_TLS_CAPATH}" ]]; then
 	PF_TLS_CAPATH=/etc/ssl/certs
 fi
 if [[ -z "${PF_DB_HOST}" ]]; then
-	PF_DB_HOST=localhost
+	export PF_DB_HOST=localhost
+else
+	export PF_DB_HOST
 fi
+
 if [[ -z "${PF_DB_NAME}" ]]; then
-	PF_DB_NAME=postfix
+	export PF_DB_NAME=postfix
+else
+	export PF_DB_NAME
 fi
+
 if [[ -z "${PF_DB_USER}" ]]; then
-	PF_DB_USER=postfix
+	export PF_DB_USER=postfix
+else
+	export PF_DB_USER
 fi
+
 if [[ -z "${PF_DB_PASS}" ]]; then
-	PF_DB_PASS=password
+	export PF_DB_PASS=password
+else
+	export PF_DB_PASS
 fi
 #if [ ! -f $PF_TLS_CAFILE ]; then
 #	echo "PF_TLS_CAFILE=$PF_TLS_CAFILE: File does not exist" 1>&2
