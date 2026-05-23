@@ -1,4 +1,4 @@
-FROM debian:12
+FROM debian:13
 LABEL maintainer="Ralph Schuster <github@ralph-schuster.eu>"
 
 RUN echo "postfix postfix/mailname string mail.example.com" | debconf-set-selections
