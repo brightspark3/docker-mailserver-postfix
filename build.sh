@@ -4,4 +4,4 @@ docker buildx build \
      --push \
      --platform linux/amd64 \
 
-#docker build --progress=plain -t technicalguru/mailserver-postfix:latest .
+#docker build --progress=plain -t george0us/mailserver-postfix:latest .
