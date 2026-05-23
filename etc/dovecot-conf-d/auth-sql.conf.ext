@@ -31,6 +31,7 @@ userdb sql {
      WHERE a.address = CONCAT('@', '%{user | domain}')) \
     ORDER BY priority ASC \
     LIMIT 1
+  iterate_query = SELECT username AS user FROM mailbox WHERE active=1
 }
 
 
