@@ -331,12 +331,12 @@ configure_instance() {
 }
 
 check_database_user() {
-	USER=$( echo "select host,user from mysql.user where user='$PF_DB_USER';" | mysql -u root --password=$PF_SETUP_PASS -h $PF_DB_HOST --skip-column-names)
+	USER=$( echo "select host,user from mysql.user where user='$PF_DB_USER';" | mysql -u root --password=$PF_SETUP_PASS -h $PF_DB_HOST --skip-column-names --skip-ssl)
 	if [[ -z "$USER" ]]
 	then
 		# Create user
 		echo "Creating user..."
-		echo "CREATE USER '$PF_DB_USER'@'%' IDENTIFIED BY '$PF_DB_PASS';" | mysql -u root --password=$PF_SETUP_PASS -h $PF_DB_HOST
+		echo "CREATE USER '$PF_DB_USER'@'%' IDENTIFIED BY '$PF_DB_PASS';" | mysql -u root --password=$PF_SETUP_PASS -h $PF_DB_HOST --skip-ssl
 		if [[ $? -ne 0 ]]
 		then
 			echo "Cannot create user $PF_DB_USER" 1>&2
@@ -347,7 +347,7 @@ check_database_user() {
 
 create_database() {
 	echo "Creating database..."
-	echo "CREATE DATABASE IF NOT EXISTS $PF_DB_NAME;" |  mysql -u root --password=$PF_SETUP_PASS -h $PF_DB_HOST
+	echo "CREATE DATABASE IF NOT EXISTS $PF_DB_NAME;" |  mysql -u root --password=$PF_SETUP_PASS -h $PF_DB_HOST --skip-ssl
 	if [[ $? -ne 0 ]]
 	then
 		echo "Cannot create database $PF_DB_NAME" 1>&2
@@ -355,7 +355,7 @@ create_database() {
 	fi
 	# Also authorize user now
 	echo "Granting privileges..."
-	echo "GRANT ALL PRIVILEGES ON \`$PF_DB_NAME\`.* TO '$PF_DB_USER'@'%' WITH GRANT OPTION; FLUSH PRIVILEGES;" | mysql -u root --password=$PF_SETUP_PASS -h $PF_DB_HOST
+	echo "GRANT ALL PRIVILEGES ON \`$PF_DB_NAME\`.* TO '$PF_DB_USER'@'%' WITH GRANT OPTION; FLUSH PRIVILEGES;" | mysql -u root --password=$PF_SETUP_PASS -h $PF_DB_HOST --skip-ssl
 	if [[ $? -ne 0 ]]
 	then
 		echo "Cannot grant privileges on database $PF_DB_NAME to user $PF_DB_USER" 1>&2
@@ -366,7 +366,7 @@ create_database() {
 }
 
 create_tables() {
-	mysql -u $PF_DB_USER --password=$PF_DB_PASS -h $PF_DB_HOST $PF_DB_NAME <$IMAGE_HOME/create_tables.sql
+	mysql -u $PF_DB_USER --password=$PF_DB_PASS --skip-ssl -h $PF_DB_HOST $PF_DB_NAME <$IMAGE_HOME/create_tables.sql
 	if [[ $? -ne 0 ]]
 	then
 		echo "Cannot create tables on database $PF_DB_NAME to user $PF_DB_USER" 1>&2
@@ -375,7 +375,7 @@ create_tables() {
 }
 
 check_database() {
-	TABLES=$( echo "show tables;" | mysql -u $PF_DB_USER --password=$PF_DB_PASS -h $PF_DB_HOST --skip-column-names $PF_DB_NAME)
+	TABLES=$( echo "show tables;" | mysql -u $PF_DB_USER --password=$PF_DB_PASS -h $PF_DB_HOST --skip-column-names --skip-ssl $PF_DB_NAME)
 	if [[ -z "$TABLES" ]]
 	then
 		# Password not correct or database not initialized
@@ -389,7 +389,7 @@ check_database() {
 		check_database_user
 
 		# Try to list the database
-		DATABASES=$( echo "show databases like '$PF_DB_NAME';" | mysql -u root --password=$PF_SETUP_PASS -h $PF_DB_HOST --skip-column-names)
+		DATABASES=$( echo "show databases like '$PF_DB_NAME';" | mysql -u root --password=$PF_SETUP_PASS -h $PF_DB_HOST --skip-ssl --skip-column-names)
 		if [[ $? -ne 0 ]]
 		then
 			echo "Cannot check database setup. Please check your database setup!" 1>&2
