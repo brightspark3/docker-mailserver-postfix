@@ -3,14 +3,6 @@
 #
 # <doc/wiki/AuthDatabase.SQL.txt>
 
-sql_driver = mysql
-
-mysql localhost {
-  user = __PF_DB_USER__
-  password = __PF_DB_PASS__
-  dbname = __PF_DB_NAME__
-}
-
 passdb sql {
   query = SELECT username AS user,password FROM mailbox WHERE username = '%{user | username}' AND active=1
   passdb_default_password_scheme = BLF-CRYPT
