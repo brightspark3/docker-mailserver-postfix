@@ -126,18 +126,16 @@ receive_override_options = no_address_mappings
 ##
 ## MySQL CONFIG
 ##
-#virtual_alias_maps = proxy:mysql:/etc/postfix/sql/aliases.cf
-#virtual_mailbox_maps = proxy:mysql:/etc/postfix/sql/accounts.cf
-#virtual_mailbox_domains = proxy:mysql:/etc/postfix/sql/domains.cf
+
 alias_maps = hash:/etc/aliases
-virtual_mailbox_domains = proxy:mysql:/etc/postfix/sql/domains.cf
-virtual_alias_maps =
-   proxy:mysql:/etc/postfix/sql/aliases.cf,
-   proxy:mysql:/etc/postfix/sql/alias_domains.cf,
-   proxy:mysql:/etc/postfix/sql/alias_domains_catchall.cf
+virtual_mailbox_domains = proxy:mysql:/etc/postfix/sql/mysql_virtual_domains_maps.cf
 virtual_mailbox_maps =
-   proxy:mysql:/etc/postfix/sql/accounts.cf,
-   proxy:mysql:/etc/postfix/sql/alias_accounts.cf
+   proxy:mysql:/etc/postfix/sql/mysql_virtual_mailbox_maps.cf,
+   proxy:mysql:/etc/postfix/sql/mysql_virtual_alias_domain_mailbox_maps.cf
+virtual_alias_maps =
+   proxy:mysql:/etc/postfix/sql/mysql_virtual_alias_maps.cf,
+   proxy:mysql:/etc/postfix/sql/mysql_virtual_alias_domain_maps.cf,
+   proxy:mysql:/etc/postfix/sql/mysql_virtual_alias_domain_catchall_maps.cf
 #local_recipient_maps = $virtual_mailbox_maps
 
 
