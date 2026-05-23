@@ -190,8 +190,11 @@ configure_postfix() {
 	copy_files $IMAGE_TEMPLATES/dovecot-conf-d /etc/dovecot/conf.d
 
 	# SQL CONFIGS
+	chown root:postfix /etc/postfix/sql
+    chmod 0750 /etc/postfix/sql
 	copy_files $IMAGE_TEMPLATES/sql /etc/postfix/sql
-	chmod -R 640 /etc/postfix/sql
+	chown -R root:postfix /etc/postfix/sql/*
+	chmod -R 640 /etc/postfix/sql/*
 
 	# Generate the EDH parameters
 	cd /etc/postfix
