@@ -8,7 +8,7 @@ myorigin = __PF_MYORIGIN__
 mydomain = __PF_MYDOMAIN__
 mydestination = localdomain
 inet_protocols = all
-
+compatibility_level=4
 
 ##
 ## MAIL QUEUE
