@@ -14,22 +14,23 @@ passdb sql {
 #}
 
 userdb sql {
-  query = \
-    (SELECT username as user, CONCAT('/var/vmail/', maildir) AS home, 1000 AS uid, 1000 AS gid, CONCAT('*:bytes=', quota) AS quota_rule, 1 AS priority \
-     FROM mailbox \
-     WHERE username = '%{user}') \
-    UNION \  
-    (SELECT username as user, CONCAT('/var/vmail/', m.maildir) AS home, 1000 AS uid, 1000 AS gid, CONCAT('*:bytes=', m.quota) AS quota_rule, 2 AS priority \
-     FROM mailbox m \
-     JOIN alias a ON m.username = a.goto \
-     WHERE a.address = '%{user}') \
-    UNION \  
-    (SELECT username as user, CONCAT('/var/vmail/', m.maildir) AS home, 1000 AS uid, 1000 AS gid, CONCAT('*:bytes=', m.quota) AS quota_rule, 3 AS priority \
-     FROM mailbox m \
-     JOIN alias a ON m.username = a.goto \
-     WHERE a.address = CONCAT('@', '%{user | domain}')) \
-    ORDER BY priority ASC \
-    LIMIT 1
+  user_query = SELECT CONCAT('/var/vmail/', maildir) AS home, 1000 AS uid, 1000 AS gid, CONCAT('*:bytes=', quota) AS quota_rule FROM mailbox WHERE username = '%{user}' AND active=1
+  #query = \
+    #(SELECT username as user, CONCAT('/var/vmail/', maildir) AS home, 1000 AS uid, 1000 AS gid, CONCAT('*:bytes=', quota) AS quota_rule, 1 AS priority \
+    # FROM mailbox \
+    # WHERE username = '%{user}') \
+    #UNION \  
+    #(SELECT username as user, CONCAT('/var/vmail/', m.maildir) AS home, 1000 AS uid, 1000 AS gid, CONCAT('*:bytes=', m.quota) AS quota_rule, 2 AS priority \
+    # FROM mailbox m \
+    # JOIN alias a ON m.username = a.goto \
+    # WHERE a.address = '%{user}') \
+    #UNION \  
+    #(SELECT username as user, CONCAT('/var/vmail/', m.maildir) AS home, 1000 AS uid, 1000 AS gid, CONCAT('*:bytes=', m.quota) AS quota_rule, 3 AS priority \
+    # FROM mailbox m \
+    # JOIN alias a ON m.username = a.goto \
+    # WHERE a.address = CONCAT('@', '%{user | domain}')) \
+    #ORDER BY priority ASC \
+    #LIMIT 1
   iterate_query = SELECT username AS user FROM mailbox WHERE active=1
 }
 
