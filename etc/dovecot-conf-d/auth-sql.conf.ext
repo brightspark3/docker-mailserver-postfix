@@ -2,7 +2,7 @@
 #
 # <doc/wiki/AuthDatabase.SQL.txt>
 
-passdb {
+passdb sql {
   driver = sql
 
   # Path for SQL configuration file, see example-config/dovecot-sql.conf.ext
@@ -16,7 +16,7 @@ passdb {
 #  driver = prefetch
 #}
 
-userdb {
+userdb sql {
   driver = sql
   args = /etc/dovecot/dovecot-sql.conf
 }
