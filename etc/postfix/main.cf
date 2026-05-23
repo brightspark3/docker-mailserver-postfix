@@ -8,7 +8,6 @@ myorigin = __PF_MYORIGIN__
 mydomain = __PF_MYDOMAIN__
 mydestination = localdomain
 inet_protocols = all
-compatibility_level = 4
 
 ##
 ## MAIL QUEUE
@@ -177,6 +176,6 @@ smtpd_tls_loglevel = 1
 smtpd_tls_received_header = yes
 
 #maillog_file = /dev/stdout
-compatibility_level = 2
+compatibility_level = 4
 smtputf8_enable = __PF_ENABLE_UTF8__
 
