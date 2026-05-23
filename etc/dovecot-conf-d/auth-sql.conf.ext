@@ -1,12 +1,19 @@
+  GNU nano 8.4                                                                        dovecot-conf-d/auth-sql.conf.ext                                                                                 
 # Authentication for SQL users. Included from 10-auth.conf.
 #
 # <doc/wiki/AuthDatabase.SQL.txt>
 
-passdb sql {
-  driver = sql
+sql_driver = mysql
 
-  # Path for SQL configuration file, see example-config/dovecot-sql.conf.ext
-  sql_config_path = /etc/dovecot/dovecot-sql.conf
+mysql localhost {
+  user = __PF_DB_USER__
+  password = __PF_DB_PASS__
+  dbname = __PF_DB_NAME__
+}
+
+passdb sql {
+  query = SELECT username AS user,password FROM mailbox WHERE username = '%{user | username}' AND active=1
+  passdb_default_password_scheme = BLF-CRYPT
 }
 
 # "prefetch" user database means that the passdb already provided the
@@ -17,8 +24,7 @@ passdb sql {
 #}
 
 userdb sql {
-  driver = sql
-  sql_config_path = /etc/dovecot/dovecot-sql.conf
+  query = SELECT CONCAT('/var/vmail/', maildir) AS home, 1000 AS uid, 1000 AS gid, CONCAT('*:bytes=', quota) AS quota_rule FROM mailbox WHERE username = '%{user | username}' AND active=1
 }
 
 # If you don't have any user-specific settings, you can avoid the user_query
