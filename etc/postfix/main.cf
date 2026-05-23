@@ -176,6 +176,6 @@ smtpd_tls_loglevel = 1
 smtpd_tls_received_header = yes
 
 #maillog_file = /dev/stdout
-compatibility_level = 4
+compatibility_level = 3.6
 smtputf8_enable = __PF_ENABLE_UTF8__
 
