@@ -41,9 +41,9 @@ fi
 if [[ -z "${PF_TLS_KEY_FILE}" ]]; then
 	PF_TLS_KEY_FILE=/etc/ssl/private/ssl-cert-snakeoil.key
 fi
-if [[ -z "${PF_TLS_CAFILE}" ]]; then
-	PF_TLS_CAFILE=/etc/postfix/CAcert.pem
-fi
+#if [[ -z "${PF_TLS_CAFILE}" ]]; then
+#	PF_TLS_CAFILE=/etc/postfix/CAcert.pem
+#fi
 if [[ -z "${PF_TLS_CAPATH}" ]]; then
 	PF_TLS_CAPATH=/etc/ssl/certs
 fi
@@ -59,9 +59,9 @@ fi
 if [[ -z "${PF_DB_PASS}" ]]; then
 	PF_DB_PASS=password
 fi
-if [ ! -f $PF_TLS_CAFILE ]; then
-	echo "PF_TLS_CAFILE=$PF_TLS_CAFILE: File does not exist" 1>&2
-fi
+#if [ ! -f $PF_TLS_CAFILE ]; then
+#	echo "PF_TLS_CAFILE=$PF_TLS_CAFILE: File does not exist" 1>&2
+#fi
 if [ ! -d $PF_TLS_CAPATH ]; then
 	echo "PF_TLS_CAPATH=$PF_TLS_CAPATH: Directory does not exist" 1>&2
 fi
