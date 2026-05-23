@@ -59,12 +59,6 @@ broken_sasl_auth_clients = yes
 smtpd_sasl_tls_security_options = noanonymous
 
 ##
-## LOCAL MAIL DELIVERY
-##
-virtual_transport = lmtp:unix:private/dovecot-lmtp
-
-
-##
 ## DKIM SIGNATURES
 ## MAIL FILTERS
 ##
@@ -137,6 +131,11 @@ virtual_mailbox_maps =
    proxy:mysql:/etc/postfix/sql/mysql_virtual_mailbox_maps.cf,
    proxy:mysql:/etc/postfix/sql/mysql_virtual_alias_domain_mailbox_maps.cf
 #local_recipient_maps = $virtual_mailbox_maps
+
+##
+## LOCAL MAIL DELIVERY
+##
+virtual_transport = lmtp:unix:private/dovecot-lmtp
 
 ##
 ## OTHER
