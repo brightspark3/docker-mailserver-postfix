@@ -14,7 +14,7 @@ passdb sql {
 #}
 
 userdb sql {
-  user_query = SELECT CONCAT('/var/vmail/', maildir) AS home, 1000 AS uid, 1000 AS gid, CONCAT('*:bytes=', quota) AS quota_rule FROM mailbox WHERE username = '%{user}' AND active=1
+  query = SELECT CONCAT('/var/vmail/', maildir) AS home, 1000 AS uid, 1000 AS gid, CONCAT('*:bytes=', quota) AS quota_rule FROM mailbox WHERE username = '%{user}' AND active=1
   #query = \
     #(SELECT username as user, CONCAT('/var/vmail/', maildir) AS home, 1000 AS uid, 1000 AS gid, CONCAT('*:bytes=', quota) AS quota_rule, 1 AS priority \
     # FROM mailbox \
