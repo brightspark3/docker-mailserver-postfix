@@ -4,8 +4,8 @@
 # <doc/wiki/AuthDatabase.SQL.txt>
 
 passdb sql {
+  passdb_default_password_scheme = BLF-CRYPT  
   query = SELECT username AS user,password FROM mailbox WHERE username = '%{user | username}' AND active=1
-  passdb_default_password_scheme = BLF-CRYPT
 }
 
 # "prefetch" user database means that the passdb already provided the
