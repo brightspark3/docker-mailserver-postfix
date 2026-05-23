@@ -18,7 +18,6 @@ RUN apt-get update \
     dovecot-mysql \
     dovecot-sieve \
     dovecot-managesieved \
-    dovecot-antispam \
     mailutils \
 	vim \
     libsasl2-modules \
