@@ -48,27 +48,16 @@ if [[ -z "${PF_TLS_CAPATH}" ]]; then
 	PF_TLS_CAPATH=/etc/ssl/certs
 fi
 if [[ -z "${PF_DB_HOST}" ]]; then
-	export PF_DB_HOST=localhost
-else
-	export PF_DB_HOST
+	PF_DB_HOST=localhost
 fi
-
 if [[ -z "${PF_DB_NAME}" ]]; then
-	export PF_DB_NAME=postfix
-else
-	export PF_DB_NAME
+	PF_DB_NAME=postfix
 fi
-
 if [[ -z "${PF_DB_USER}" ]]; then
-	export PF_DB_USER=postfix
-else
-	export PF_DB_USER
+	PF_DB_USER=postfix
 fi
-
 if [[ -z "${PF_DB_PASS}" ]]; then
-	export PF_DB_PASS=password
-else
-	export PF_DB_PASS
+	PF_DB_PASS=password
 fi
 #if [ ! -f $PF_TLS_CAFILE ]; then
 #	echo "PF_TLS_CAFILE=$PF_TLS_CAFILE: File does not exist" 1>&2
@@ -146,6 +135,10 @@ copy_template_file() {
 		replace_var $TMP_DST 'PF_ENABLE_UTF8'
 		replace_var $TMP_DST 'PF_MILTERS'
 		replace_var $TMP_DST 'PF_ADD_MYNETWORKS'
+		sed -i "s/TEMPLATE_DB_HOST/${PF_DB_HOST}/g" /etc/dovecot/dovecot.conf
+		sed -i "s/TEMPLATE_DB_NAME/${PF_DB_NAME}/g" /etc/dovecot/dovecot.conf
+		sed -i "s/TEMPLATE_DB_USER/${PF_DB_USER}/g" /etc/dovecot/dovecot.conf
+		sed -i "s/TEMPLATE_DB_PASS/${PF_DB_PASS}/g" /etc/dovecot/dovecot.conf
 	fi
 	if [ ! -f $TMP_DST ]; then
 		echo "Cannot create $TMP_DST" 1>&2
