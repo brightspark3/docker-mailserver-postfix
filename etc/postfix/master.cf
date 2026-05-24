@@ -76,6 +76,8 @@ flush     unix  n       -       n       1000?   0       flush
 proxymap  unix  -       -       n       -       -       proxymap
 proxywrite unix -       -       n       -       1       proxymap
 smtp      unix  -       -       n       -       -       smtp
+    -o sender_canonical_maps=socketmap:inet:mailserver-postsrsd:10003:forward
+    -o sender_canonical_classes=envelope_sender
 relay     unix  -       -       n       -       -       smtp
 showq     unix  n       -       n       -       -       showq
 error     unix  -       -       n       -       -       error
@@ -110,6 +112,3 @@ postlog   unix-dgram n  -       n       -       1       postlogd
    -o mynetworks=127.0.0.0/8,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16
    -o strict_rfc821_envelopes=yes
    -o receive_override_options=no_unknown_recipient_checks,no_header_body_checks
-smtp      unix  -       -       n       -       -       smtp
-    -o sender_canonical_maps=socketmap:inet:mailserver-postsrsd:10003:forward
-    -o sender_canonical_classes=envelope_sender
