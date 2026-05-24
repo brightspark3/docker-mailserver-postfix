@@ -65,7 +65,7 @@ smtpd_sasl_tls_security_options = noanonymous
 milter_default_action = accept
 milter_protocol = 6
 smtpd_milters = __PF_MILTERS__
-non_smtpd_milters = $smtpd_milters
+non_smtpd_milters = __PF_MILTERS__
 
 ##
 ## SERVER RESTRICTIONS 
