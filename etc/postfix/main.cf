@@ -7,7 +7,7 @@ myhostname = __PF_MYHOSTNAME__
 myorigin = __PF_MYORIGIN__
 mydomain = __PF_MYDOMAIN__
 mydestination = localhost
-inet_protocols = all
+inet_protocols = ipv4
 
 ##
 ## MAIL QUEUE
