@@ -145,6 +145,13 @@ virtual_transport = lmtp:unix:private/dovecot-lmtp
 smtpd_forbid_bare_newline = yes
 smtpd_forbid_bare_newline_exclusions = $mynetworks
 
+### PostSRSd
+sender_canonical_maps = socketmap:inet:mailserver-postsrsd:10003:forward
+sender_canonical_classes = envelope_sender
+recipient_canonical_maps = socketmap:inet:mailserver-postsrsd:10003:reverse
+recipient_canonical_classes = envelope_recipient, header_recipient
+
+
 ### Mailbox size
 mailbox_size_limit = 0
 
