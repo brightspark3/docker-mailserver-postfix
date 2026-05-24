@@ -135,7 +135,10 @@ virtual_mailbox_maps =
 ##
 ## LOCAL MAIL DELIVERY
 ##
-virtual_transport = lmtp:unix:private/dovecot-lmtp
+#virtual_transport = lmtp:unix:private/dovecot-lmtp
+
+#PostSRSd
+virtual_transport = smtp::10025
 
 ##
 ## OTHER
