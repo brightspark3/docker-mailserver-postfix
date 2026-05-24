@@ -135,10 +135,7 @@ virtual_mailbox_maps =
 ##
 ## LOCAL MAIL DELIVERY
 ##
-#virtual_transport = lmtp:unix:private/dovecot-lmtp
-
-#PostSRSd
-virtual_transport = smtp::10025
+virtual_transport = lmtp:unix:private/dovecot-lmtp
 
 ##
 ## OTHER
@@ -149,7 +146,7 @@ smtpd_forbid_bare_newline = yes
 smtpd_forbid_bare_newline_exclusions = $mynetworks
 
 ### PostSRSd
-sender_canonical_maps = socketmap:inet:mailserver-postsrsd:10003:forward
+#sender_canonical_maps = socketmap:inet:mailserver-postsrsd:10003:forward
 sender_canonical_classes = envelope_sender
 recipient_canonical_maps = socketmap:inet:mailserver-postsrsd:10003:reverse
 recipient_canonical_classes = envelope_recipient, header_recipient
